@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .services-terri-figure img {
+        width: 100%; /* Konteynerning kengligiga moslashadi */
+        height: 200px; /* Fikslangan balandlik */
+        object-fit: cover; /* Rasmlarning nisbatini saqlash */
+        border-radius: 10px; /* Yumaloqlik qo'shish (ixtiyoriy) */
+    }
+    .product-price-old {
+    text-decoration: line-through;
+    color: #888;
+    margin-right: 10px;
+    }
+    .img-fluid {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+
+</style>
+<!-- Swiper-->
+<section class="section swiper-container swiper-slider swiper-slider-2 swiper-slider-3" data-loop="true"
+         data-autoplay="5000" data-simulate-touch="false" data-slide-effect="fade">
+    <div class="swiper-wrapper text-sm-left">
+        {% for slider in sliders %}
+        <div class="swiper-slide context-dark" data-slide-bg="{{ slider.img.url }}">
+            <div class="swiper-slide-caption section-md">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-9 col-md-8 col-lg-7 col-xl-7 offset-lg-1 offset-xxl-0">
+                            <h1 class="oh swiper-title"><span class="d-inline-block"
+                                                              data-caption-animate="slideInUp"
+                                                              data-caption-delay="0">{{ slider.title }}</span></h1>
+                            <p class="big swiper-text" data-caption-animate="fadeInLeft" data-caption-delay="300">
+                                {{ slider.description }}</p><a
+                                class="button button-lg button-primary button-winona button-shadow-2"
+                                href="/menu/"
+                                data-caption-animate="fadeInUp" data-caption-delay="300">Bizning Menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Swiper Pagination-->
+    <div class="swiper-pagination" data-bullet-custom="true"></div>
+    <!-- Swiper Navigation-->
+    <div class="swiper-button-prev">
+        <div class="preview">
+            <div class="preview__img"></div>
+        </div>
+        <div class="swiper-button-arrow"></div>
+    </div>
+    <div class="swiper-button-next">
+        <div class="swiper-button-arrow"></div>
+        <div class="preview">
+            <div class="preview__img"></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- What We Offer -->
+<section class="section section-md bg-default py-5">
+    <div class="container">
+        <h3 class="text-center mb-4"><span class="d-inline-block">Bizning Menu</span></h3>
+        <div class="row row-md row-30">
+            {% for menu in bigmenus %}
+            <div class="col-sm-6 col-lg-4 mb-4">
+                <div class="oh-desktop">
+                    <!-- Services Terri -->
+                    <article class="services-terri">
+                        <div class="services-terri-figure">
+                            <img src="{{ menu.img.url }}" alt="{{ menu.title }}"/>
+                        </div>
+                        <div class="services-terri-caption text-center mt-3">
+                            <span class="services-terri-icon {{ menu.icon_img.url }}" style="font-size: 24px;"></span>
+                            <h5 class="services-terri-title mt-2">
+                                <a href="{{ menu.url }}" class="text-decoration-none">{{ menu.title }}</a>
+                            </h5>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Section CTA-->
+<section class="primary-overlay section parallax-container" data-parallax-img="images/bg-3.jpg">
+    <div class="parallax-content section-xl context-dark text-md-left">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-sm-8 col-md-7 col-lg-5">
+                    <div class="cta-modern">
+                        <h3 class="cta-modern-title wow fadeInRight">Best atmosphere</h3>
+                        <p class="lead">PizzaHouse is the place of the best pizza and high-quality service.</p>
+                        <p class="cta-modern-text oh-desktop" data-wow-delay=".1s"><span
+                                class="cta-modern-decor wow slideInLeft"></span><span
+                                class="d-inline-block wow slideInDown">Ben Smith, Founder</span></p><a
+                            class="button button-md button-secondary-2 button-winona wow fadeInUp" href="#"
+                            data-wow-delay=".2s">View Our Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Our Shop -->
+<section class="section section-lg bg-default">
+    <div class="container">
+        <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Selected Pizzas</span></h3>
+        <div class="row row-lg row-30">
+            {% for product in news_foods %}
+            <div class="col-sm-6 col-lg-4 col-xl-3">
+                <!-- Product -->
+                <article class="product wow fadeInLeft" data-wow-delay=".15s">
+                    <div class="product-figure">
+                        <!-- Rasmlar kattaroq ko'rsatiladi -->
+                        <img src="{{ product.img.url }}" alt="{{ product.name }}" class="img-fluid rounded"
+                             style="width: 200px; height: 200px; object-fit: cover;"/>
+                    </div>
+                    <h6 class="product-title">{{ product.title }}</h6>
+                    <div class="product-price-wrap">
+                        {% if product.sale %}
+                        <!-- Eski narxni ko'rsatish -->
+                        <div class="product-price product-price-old">{{ product.old_price }}so'm</div>
+                        {% endif %}
+                        <div class="product-price">{{ product.price }}so'm</div>
+                    </div>
+                    <div class="product-button">
+                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add
+                            to cart</a></div>
+                        <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View
+                            Product</a></div>
+                    </div>
+                    {% if product.is_new %}
+                    <span class="product-badge product-badge-new">New</span>
+                    {% endif %}
+                    {% if product.sale %}
+                    <span class="product-badge product-badge-sale">Sale</span>
+                    {% endif %}
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% for cta in aksiya %}
+<!-- Section CTA-->
+<section class="primary-overlay section parallax-container" data-parallax-img="{{cta.img.url}}">
+    <div class="parallax-content section-xxl context-dark text-md-left">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-sm-9 col-md-7 col-lg-5">
+                    <div class="cta-modern">
+                        <h3 class="cta-modern-title cta-modern-title-2 oh-desktop"><span
+                                class="d-inline-block wow fadeInLeft">{{ cta.title }}</span></h3>
+                        <p class="cta-modern-text cta-modern-text-2 oh-desktop" data-wow-delay=".1s"><span
+                                class="cta-modern-decor cta-modern-decor-2 wow slideInLeft"></span><span
+                                class="d-inline-block wow slideInUp">{{ cta.description }}</span>
+                        </p><a class="button button-lg button-secondary button-winona wow fadeInRight"
+                               href="/aloqa" data-wow-delay=".2s">Aksiyada ishtirok qiling</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+<!-- What We Offer-->
+<section class="section section-xl bg-default">
+    <div class="container">
+        <h3 class="wow fadeInLeft">Bizning mijozlarimiz fikrlari 👀</h3>
+    </div>
+    <div class="container container-style-1">
+        <div class="owl-carousel owl-style-12" data-items="1" data-sm-items="2" data-lg-items="3" data-margin="30"
+             data-xl-margin="45" data-autoplay="true" data-nav="true" data-center="true" data-smart-speed="400">
+            {% for testimonial in testimonials %}
+            <!-- Quote Tara-->
+            <article class="quote-tara">
+                <div class="quote-tara-caption">
+                    <div class="quote-tara-text">
+                        <p class="q">{{ testimonial.quote_text }}</p>
+                    </div>
+                    <div class="quote-tara-figure">
+                        <img src="{{ testimonial.image.url }}" alt="" width="115" height="115"/>
+                    </div>
+                </div>
+                <h6 class="quote-tara-author">{{ testimonial.author_name }}</h6>
+                <div class="quote-tara-status">{{ testimonial.status }}</div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-last bg-default">
+    <div class="container-fluid container-inset-0 isotope-wrap">
+        <div class="row row-10 gutters-10 isotope" data-isotope-layout="masonry" data-isotope-group="gallery"
+             data-lightgallery="group">
+            {% for item in random_gallery_items %}
+            <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                <!-- Thumbnail Mary-->
+                <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInLeft">
+                    <a class="thumbnail-mary-figure" href="{{ item.image }}" data-lightgallery="item">
+                        <img src="{{ item.image }}" alt="" width="310" height="585"/>
+                    </a>
+                    <div class="thumbnail-mary-caption">
+                        <div>
+                            <h6 class="thumbnail-mary-title"><a href="#">{{ item.title }}</a></h6>
+                            <div class="thumbnail-mary-location">{{ item.location }}</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Section Services  Last section-->
+<section class="section section-sm bg-default">
+    <div class="container">
+        <div class="owl-carousel owl-style-11 dots-style-2" data-items="1" data-sm-items="1" data-lg-items="2"
+             data-xl-items="4" data-margin="30" data-dots="true" data-mouse-drag="true" data-rtl="true">
+            <article class="box-icon-megan wow fadeInUp">
+                <div class="box-icon-megan-header">
+                    <div class="box-icon-megan-icon linearicons-bag"></div>
+                </div>
+                <h5 class="box-icon-megan-title"><a href="#">Bepul yetkazib berish</a></h5>
+                <p class="box-icon-megan-text">Agar siz 3 tadan ortiq ovqat buyurtma qilsangiz, biz ularni mamnuniyat
+                    bilan sizga bepul yetkazib beramiz.</p>
+            </article>
+            <article class="box-icon-megan wow fadeInUp" data-wow-delay=".05s">
+                <div class="box-icon-megan-header">
+                    <div class="box-icon-megan-icon linearicons-map2"></div>
+                </div>
+                <h5 class="box-icon-megan-title"><a href="#">Qulay joylashuv</a></h5>
+                <p class="box-icon-megan-text">Bizning pitseriya shahar markazida joylashgan va hatto dam olish
+                    kunlarida ham borish juda oson.</p>
+            </article>
+            <article class="box-icon-megan wow fadeInUp" data-wow-delay=".1s">
+                <div class="box-icon-megan-header">
+                    <div class="box-icon-megan-icon linearicons-radar"></div>
+                </div>
+                <h5 class="box-icon-megan-title"><a href="#">Tekin Wi-fi</a></h5>
+                <p class="box-icon-megan-text">Restaranimizda barcha mijozlari va mehmonlari uchun bizda bepul Wi-Fi
+                    mavjud.</p>
+            </article>
+            <article class="box-icon-megan wow fadeInUp" data-wow-delay=".15s">
+                <div class="box-icon-megan-header">
+                    <div class="box-icon-megan-icon linearicons-thumbs-up"></div>
+                </div>
+                <h5 class="box-icon-megan-title"><a href="#">Eng yaxshi xizmat</a></h5>
+                <p class="box-icon-megan-text">Mijoz bizning №1 ustuvor vazifamizdir, chunki biz yuqori darajadagi
+                    mijozlarga xizmat ko'rsatamiz.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
